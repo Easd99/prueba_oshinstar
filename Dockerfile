@@ -18,5 +18,4 @@ COPY package*.json ./
 COPY doc.yaml ./
 RUN npm install --only=production
 COPY --from=build /usr/src/app/dist ./dist
-EXPOSE 5000
 CMD ["npm", "run", "start"]
