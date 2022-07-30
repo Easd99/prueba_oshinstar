@@ -8,6 +8,8 @@ services:
       - postgres_so
     volumes:
       - ./environmentsVars/.test-env.yml:/usr/src/app/.env.yml
+    ports:
+      - "5000:5000"
   postgres_so:
     container_name: postgres_so
     image: postgres
