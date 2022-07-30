@@ -11,13 +11,14 @@ import db from "./models";
 const app = express();
 if (process.env.NODE_ENV !== "test") {
   const connect = async () => {
-    try {
-      db.sequelize.sync().then(() => {
+    db.sequelize
+      .sync()
+      .then(() => {
         console.log("DB CONNECTED");
+      })
+      .catch(() => {
+        process.exit();
       });
-    } catch (e) {
-      process.exit();
-    }
   };
   const bd = connect();
 }

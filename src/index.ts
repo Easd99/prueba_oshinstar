@@ -2,6 +2,8 @@ const dotenv = require('dotenv-yaml');
 
 dotenv.config();
 
+console.log(process.env.POSTGRES_USER)
+
 import app from './app'
 
 
