@@ -1,0 +1,19 @@
+version: '3'
+services:
+  ms-animes:
+    container_name: ms-film
+    build: ./
+    restart: always
+    depends_on:
+      - postgres_so
+    volumes:
+      - ./environmentsVars/.test-env.yml:/usr/src/app/.env.yml
+  postgres_so:
+    container_name: postgres_so
+    image: postgres
+    ports:
+      - "4561:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Bv{-jqW{&L23dMkJ5N
+      POSTGRES_DB: db_oshinstar

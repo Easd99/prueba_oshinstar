@@ -1,0 +1,225 @@
+openapi: 3.0.0
+info:
+  description: "This is a basic API "
+  version: "1.0.0"
+  title: "Prueba Oshinstar"
+servers:
+  - url: 'http://localhost/api/v1'
+components:
+  schemas:
+    Film:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Forrest Gump
+        description:
+          type: string
+          example: description
+        createdAt:
+          type: string
+          format: date-time
+          example: 2021-09-09T18:02:39.285Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2021-09-09T18:02:39.285Z
+  parameters:
+    onlyId:
+      in: path
+      name: id
+      example: 1
+      required: true
+      schema:
+        type: integer
+  requestBodies:
+    Film_Post:
+      required: true
+      content:
+        application/json:
+          schema:
+            required:
+              - name
+              - description
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+          examples:
+            valid:
+              value:
+                title: Forrest Gump
+                description: description
+    Film_Patch:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+          examples:
+            valid:
+              value:
+                title: Forrest Gump
+                description: description
+  responses:
+    "400Film":
+      description: Failed request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              properties:
+                status:
+                  type: string
+                  example: error
+                data:
+                  type: string
+                  example: title must be provided
+    "404Film":
+      description: Failed request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              properties:
+                status:
+                  type: string
+                  example: error
+                data:
+                  type: string
+                  example: film not found
+    "400-invalidId":
+      description: Failed request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              properties:
+                status:
+                  type: string
+                  example: error
+                data:
+                  type: string
+                  example: id must be a number
+tags:
+  - name: Films
+    description: CRUD Film
+paths:
+  '/films':
+    post:
+      tags:
+        - Films
+      description: add a new film
+      requestBody:
+        $ref: "#/components/requestBodies/Film_Post"
+      responses:
+        "201":
+          description: Successfull request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    status:
+                      type: string
+                      example: success
+                    data:
+                      $ref: '#/components/schemas/Film'
+        "400":
+          $ref: '#/components/responses/400Film'
+    get:
+      tags:
+        - Films
+      description: get all films
+      responses:
+        "200":
+          description: Successfull request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    status:
+                      type: string
+                      example: success
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Film'
+  '/films/{id}':
+    get:
+      tags:
+        - Films
+      description: get one film
+      parameters:
+        - $ref: '#/components/parameters/onlyId'
+      responses:
+        "200":
+          description: Successfull request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    status:
+                      type: string
+                      example: success
+                    data:
+                      $ref: '#/components/schemas/Film'
+        "400":
+          $ref: '#/components/responses/400-invalidId'
+        "404":
+          $ref: '#/components/responses/404Film'
+    delete:
+      tags:
+        - Films
+      description: delete a film
+      parameters:
+        - $ref: '#/components/parameters/onlyId'
+      responses:
+        "204":
+          description: Successfull request
+        "400":
+          $ref: '#/components/responses/400-invalidId'
+        "404":
+          $ref: '#/components/responses/404Film'
+    patch:
+      tags:
+        - Films
+      description: update a film
+      parameters:
+        - $ref: '#/components/parameters/onlyId'
+      requestBody:
+        $ref: "#/components/requestBodies/Film_Patch"
+      responses:
+        "200":
+          description: Successfull request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    status:
+                      type: string
+                      example: success
+                    data:
+                      $ref: '#/components/schemas/Film'
+        "400":
+          $ref: '#/components/responses/400-invalidId'
+        "404":
+          $ref: '#/components/responses/404Film'
