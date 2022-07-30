@@ -1,6 +1,6 @@
 version: '3'
 services:
-  ms-animes:
+  ms-film:
     container_name: ms-film
     build: ./
     restart: always
