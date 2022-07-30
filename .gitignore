@@ -3,3 +3,4 @@ node_modules/
 querys.txt
 .env.yml
 src/config/config.json
+dist/
