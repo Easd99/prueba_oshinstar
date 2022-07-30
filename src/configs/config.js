@@ -1,5 +1,6 @@
 const fs = require('fs');
 const dotenv = require('dotenv-yaml');
+dotenv.config();
 
 module.exports = {
     development: {
